@@ -14,7 +14,7 @@ class AdvertisementController extends Controller
      */
     public function index()
     {
-        //
+        dd(Advertisement::all());
     }
 
     /**

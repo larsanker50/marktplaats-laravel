@@ -22,7 +22,9 @@ class BiddingFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => $this->faker->numberBetween($min = 1, $max = 10),
+            'advertisement_id' => $this->faker->numberBetween($min = 1, $max = 10),
+            'bidding' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000)
         ];
     }
 }

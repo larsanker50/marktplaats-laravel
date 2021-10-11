@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Rubric;
 
 class RubricSeeder extends Seeder
 {
@@ -13,6 +14,6 @@ class RubricSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Rubric::factory(10)->create();
     }
 }

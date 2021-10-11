@@ -22,7 +22,9 @@ class MessageFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'from_user_id' => $this->faker->numberBetween($min = 1, $max = 10),
+            'to_user_id' => $this->faker->numberBetween($min = 1, $max = 10),
+            'body' => $this->faker->sentence
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Bidding;
 
 class BiddingSeeder extends Seeder
 {
@@ -13,6 +14,6 @@ class BiddingSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Bidding::factory(10)->create();
     }
 }

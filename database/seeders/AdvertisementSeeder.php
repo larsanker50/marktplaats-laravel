@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Advertisement;
+use App\Models\Rubric;
 
 class AdvertisementSeeder extends Seeder
 {
@@ -13,6 +15,9 @@ class AdvertisementSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Advertisement::factory(10)->create()->each(function ($advertisement) {
+            $rubric = Rubric::factory(2)->create();
+            $advertisement->rubric()->saveMany($rubric);
+        });
     }
 }

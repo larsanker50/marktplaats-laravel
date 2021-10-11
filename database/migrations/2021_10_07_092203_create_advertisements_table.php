@@ -18,7 +18,7 @@ class CreateAdvertisementsTable extends Migration
             $table->foreignId('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
-            $table->string('body');
+            $table->LONGTEXT('body');
             $table->string('status');
             $table->boolean('premium')->default(false);
             $table->timestamps();

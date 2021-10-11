@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\BiddingController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\RubricController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +19,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return 'welcome world';
-});
+route::get('/', [ UserController::class,
+'index'])->name('user.index');

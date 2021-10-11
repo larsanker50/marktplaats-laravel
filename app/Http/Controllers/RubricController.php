@@ -14,7 +14,7 @@ class RubricController extends Controller
      */
     public function index()
     {
-        //
+        dd(Rubric::all());
     }
 
     /**

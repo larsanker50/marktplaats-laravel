@@ -14,7 +14,7 @@ class BiddingController extends Controller
      */
     public function index()
     {
-        //
+        dd(Bidding::all());
     }
 
     /**
