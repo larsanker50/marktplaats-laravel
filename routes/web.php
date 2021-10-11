@@ -19,5 +19,13 @@ use App\Http\Controllers\UserController;
 |
 */
 
+//usercontroller
 route::get('/', [ UserController::class,
 'index'])->name('user.index');
+
+route::get('user/create', [ UserController::class,
+'create'])->name('user.create');
+
+route::post('user/store', [ UserController::class,
+'store'])->name('user.store');
+

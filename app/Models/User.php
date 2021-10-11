@@ -9,6 +9,8 @@ class User extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['email', 'username', 'password'];
+
     public function advertisement() {
         return $this->hasMany(Advertisement::class);
     }
