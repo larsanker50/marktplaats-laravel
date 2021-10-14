@@ -26,7 +26,7 @@ class UserController extends Controller
     public function create()
     {
         return view('user/create', [
-            'countries' => Country::all()
+            'countries' => Country::select('name', 'code')->get()
         ]);
     }
 
@@ -38,6 +38,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        //NOTE checken of deze functie oke is
         request()->validate([
             'email' => 'required|unique:Users|email',
             'username' => 'required|unique:Users|min:2',
@@ -51,7 +52,7 @@ class UserController extends Controller
 
         ]);
 
-        $residence = request('house_number') . ' ' . request('unit_or_apt') . ' ' . request('street_name') . ' ' . request('city') . ' ' . request('postal_code') . ' ' . request('country'); 
+        $residence = request('house_number') . ', ' . request('unit_or_apt') . ', ' . request('street_name') . ', ' . request('city') . ', ' . request('postal_code') . ', ' . request('country'); 
 
         $user = new User();
         $user->email = request('email');
@@ -107,4 +108,5 @@ class UserController extends Controller
     {
         //
     }
+
 }

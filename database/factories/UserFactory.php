@@ -23,6 +23,7 @@ class UserFactory extends Factory
     {
         return [
             'username' => $this->faker->unique()->userName(),
+            //NOTE zorgen dat deze passworden ook bcript zijn
             'password' => $this->faker->password,
             'email' => $this->faker->unique()->safeEmail,
             'residence' => $this->faker->unique()->address

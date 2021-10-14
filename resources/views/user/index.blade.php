@@ -4,8 +4,8 @@
 
     <ul>
         <li><a href="/"><b>home</b></a></li>
-        <li><a href="/">login</a></li>
-        <li><a href="user/create">create an account</a></li>
+        <li><a href="{{ route('authentication.login') }}">login</a></li>
+        <li><a href="{{ route('user.create') }}">create an account</a></li>
     </ul>
     @endsection    
     

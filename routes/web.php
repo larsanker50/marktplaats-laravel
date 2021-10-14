@@ -7,6 +7,7 @@ use App\Http\Controllers\BiddingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,15 @@ route::get('user/create', [ UserController::class,
 route::post('user/store', [ UserController::class,
 'store'])->name('user.store');
 
+//authenticationcontroller
+
+route::get('authentication/login', [ AuthenticationController::class,
+'login'])->name('authentication.login');
+
+route::post('authentication/authenticate', [ AuthenticationController::class,
+'authenticate'])->name('authentication.authenticate');
+
+//advertisementcontroller
+
+route::get('advertisement/index', [ AdvertisementController::class,
+'index'])->name('advertisement.index');

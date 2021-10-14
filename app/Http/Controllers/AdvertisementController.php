@@ -14,7 +14,9 @@ class AdvertisementController extends Controller
      */
     public function index()
     {
-        dd(Advertisement::all());
+        return view('advertisement/overview', [
+            'advertisements' => Advertisements::all()
+        ]);
     }
 
     /**
