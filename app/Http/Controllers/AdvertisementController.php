@@ -14,8 +14,13 @@ class AdvertisementController extends Controller
      */
     public function index()
     {
+        $advertisements = Advertisement::where('premium', '=', false)->select('user_id', 'title', 'body', 'status', 'premium', 'created_at')->get();
+
+        $premium_advertisements = Advertisement::where('premium', '=', true)->select('user_id', 'title', 'body', 'status', 'premium', 'created_at')->get();
+
         return view('advertisement/overview', [
-            'advertisements' => Advertisements::all()
+            'advertisements' => $advertisements,
+            'premium_advertisements' => $premium_advertisements
         ]);
     }
 

@@ -5,3 +5,14 @@
 .is-danger {
     color: red;
 }
+
+.advertisement {
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    max-width: 30%;
+}
+
+.premium {
+    border-color: rgb(164, 223, 28);
+}
