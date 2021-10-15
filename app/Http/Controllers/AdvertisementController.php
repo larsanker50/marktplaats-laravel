@@ -14,14 +14,17 @@ class AdvertisementController extends Controller
      */
     public function index()
     {
-        // CR :: het is niet nodig om zo specifiek alles op te halen wat je wel nodig hebt, ik denk dat er niet veel meer kollomen zijn dan deze
-        $advertisements = Advertisement::where('premium', '=', false)->select('user_id', 'title', 'body', 'status', 'premium', 'created_at')->get();
-        // CR :: nu doe je 2 requests naar het DB met maar een klein verschil, kun je dit niet beter oplossen op een andere plek?
-        $premium_advertisements = Advertisement::where('premium', '=', true)->select('user_id', 'title', 'body', 'status', 'premium', 'created_at')->get();
+        // CR :: dit zou ik anders doen, nu doe je 3 requests naar advertisemens, misschien op een andere plek uitsplitsen?
+        $advertisements = Advertisement::where('premium', '=', false)->where('status', '=', 'available')->select('user_id', 'title', 'body', 'status', 'premium', 'created_at')->get();
+
+        $premium_advertisements = Advertisement::where('premium', '=', true)->where('status', '=', 'available')->select('user_id', 'title', 'body', 'status', 'premium', 'created_at')->get();
+
+        $sold_advertisements = Advertisement::where('status', '=', 'sold')->select('user_id', 'title', 'body', 'status', 'premium', 'created_at', 'updated_at')->get();
 
         return view('advertisement/overview', [
             'advertisements' => $advertisements,
-            'premium_advertisements' => $premium_advertisements
+            'premium_advertisements' => $premium_advertisements,
+            'sold_advertisements' => $sold_advertisements
         ]);
     }
 

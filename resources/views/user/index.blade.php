@@ -12,6 +12,5 @@
     @section ('body')
     
     <p>welkom op de site Marktplaats</p>
-    <a href="/">klik hier om in te loggen</a>
 
     @endsection
