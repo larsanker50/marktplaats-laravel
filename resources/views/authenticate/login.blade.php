@@ -19,7 +19,7 @@
             
         </div>
         <div>
-            <input class ="input" type="text" name="password" id="password" placeholder="password" required>
+            <input class ="input" type="password" name="password" id="password" placeholder="password" required>
         </div>
       
         <input class ="input" type="submit" value="submit">

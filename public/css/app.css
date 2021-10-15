@@ -8,11 +8,30 @@
 
 .advertisement {
     border-style: solid;
-    border-width: 2px;
+    border-width: 5px;
     border-color: black;
     max-width: 30%;
+    margin-bottom: 2em;
 }
 
 .premium {
     border-color: rgb(164, 223, 28);
+}
+
+.sold {
+    border-color: grey;
+    background-color: lightgrey;
+    font-style: italic;
+}
+
+.title {
+    font-weight: 600;
+}
+
+.body {
+    padding-top: 10px;
+}
+
+.sold_text {
+    font-size: large;
 }
