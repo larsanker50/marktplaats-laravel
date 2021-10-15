@@ -14,17 +14,8 @@ class AdvertisementController extends Controller
      */
     public function index()
     {
-        // CR :: dit zou ik anders doen, nu doe je 3 requests naar advertisemens, misschien op een andere plek uitsplitsen?
-        $advertisements = Advertisement::where('premium', '=', false)->where('status', '=', 'available')->select('user_id', 'title', 'body', 'status', 'premium', 'created_at')->get();
-
-        $premium_advertisements = Advertisement::where('premium', '=', true)->where('status', '=', 'available')->select('user_id', 'title', 'body', 'status', 'premium', 'created_at')->get();
-
-        $sold_advertisements = Advertisement::where('status', '=', 'sold')->select('user_id', 'title', 'body', 'status', 'premium', 'created_at', 'updated_at')->get();
-
         return view('advertisement/overview', [
-            'advertisements' => $advertisements,
-            'premium_advertisements' => $premium_advertisements,
-            'sold_advertisements' => $sold_advertisements
+            'advertisements' => Advertisement::orderBy('status', 'asc')->orderBy('premium', 'desc')->get(),
         ]);
     }
 

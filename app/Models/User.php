@@ -12,7 +12,7 @@ class User extends Model implements AuthenticatableContract
     use Authenticatable;
     use HasFactory;
 
-    protected $fillable = ['email', 'username', 'password'];
+    protected $fillable = ['email', 'username', 'password', 'residence', 'postal_code'];
 
     public function advertisement() {
         return $this->hasMany(Advertisement::class);

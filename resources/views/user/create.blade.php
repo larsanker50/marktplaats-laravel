@@ -56,16 +56,6 @@
         <p class="help is-danger">{{ $errors->first('postal_code') }}</p>
     </div>
 
-    <p>country*:</p>
-    <div>
-        <select id="country" name="country">
-            @foreach ($countries as $country)
-            <option value="{{ $country->code }}">{{ $country->name }}</option>
-            @endforeach
-        </select>
-        <p class="help is-danger">{{ $errors->first('postal_code') }}</p>
-    </div>
-
    <p><i>* is required</i></p>
     <input class ="input" type="submit" value="submit">
 

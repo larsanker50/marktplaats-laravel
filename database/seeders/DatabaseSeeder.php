@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
             BiddingSeeder::class,
             RubricSeeder::class,
             MessageSeeder::class,
-            CountrySeeder::class
         ]);
     }
 }

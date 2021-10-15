@@ -23,10 +23,10 @@ class UserFactory extends Factory
     {
         return [
             'username' => $this->faker->unique()->userName(),
-            //NOTE zorgen dat deze passworden ook bcript zijn
-            'password' => $this->faker->password,
+            'password' => bcrypt('password'),
             'email' => $this->faker->unique()->safeEmail,
-            'residence' => $this->faker->unique()->address
+            'residence' => $this->faker->unique()->address,
+            'postal_code' => $this->faker->unique()->postcode
         ];
     }
 }
