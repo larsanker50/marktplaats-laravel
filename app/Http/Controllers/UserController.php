@@ -26,6 +26,7 @@ class UserController extends Controller
     public function create()
     {
         return view('user/create', [
+            // CR :: moet je de id ook niet mee geven naar de frontEnd?
             'countries' => Country::select('name', 'code')->get()
         ]);
     }
@@ -39,6 +40,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //NOTE checken of deze functie oke is
+        // CR :: mooier zou zijn om de validatie in zijn eigen Request te zetten 'https://laravel.com/docs/8.x/validation#form-request-validation'
         request()->validate([
             'email' => 'required|unique:Users|email',
             'username' => 'required|unique:Users|min:2',
@@ -52,8 +54,10 @@ class UserController extends Controller
 
         ]);
 
-        $residence = request('house_number') . ', ' . request('unit_or_apt') . ', ' . request('street_name') . ', ' . request('city') . ', ' . request('postal_code') . ', ' . request('country'); 
+        // CR :: als je het adres wil opslaan van een gebruiker zou ik het in aparte kollomen in het DB zetten
+        $residence = request('house_number') . ', ' . request('unit_or_apt') . ', ' . request('street_name') . ', ' . request('city') . ', ' . request('postal_code') . ', ' . request('country');
 
+        // CR :: User::create([]) is korter en mooier
         $user = new User();
         $user->email = request('email');
         $user->username = request('username');
@@ -108,5 +112,4 @@ class UserController extends Controller
     {
         //
     }
-
 }

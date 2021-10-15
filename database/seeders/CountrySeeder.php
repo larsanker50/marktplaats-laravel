@@ -14,8 +14,9 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
+        // CR :: staat er in de opdracht dat je ook met landen moet werken? Ik zou er vanuit gaan dat elke user uit Nederland komt ;)
         DB::table('countries')->truncate();
- 
+
         $countries = [
             ['name' => 'Afghanistan', 'code' => 'AF'],
             ['name' => 'Åland Islands', 'code' => 'AX'],
@@ -267,7 +268,7 @@ class CountrySeeder extends Seeder
             ['name' => 'Zambia', 'code' => 'ZM'],
             ['name' => 'Zimbabwe', 'code' => 'ZW'],
         ];
- 
+
         DB::table('countries')->insert($countries);
     }
 }
