@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\advertisement;
+use App\Models\Advertisement;
+use App\Models\Bidding;
+use App\Models\Rubric;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAdvertisementRequest;
 
 class AdvertisementController extends Controller
 {
@@ -26,7 +29,9 @@ class AdvertisementController extends Controller
      */
     public function create()
     {
-        //
+        return view('advertisement/create', [
+            'rubrics' => Rubric::orderBy('name')->get()
+        ]);
     }
 
     /**
@@ -35,9 +40,23 @@ class AdvertisementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAdvertisementRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+
+        if ($validated['premium'] === "true") {
+            $premium = true;
+        } else {
+            $premium = false;
+        }
+
+        Advertisement::create([
+            'title' => $validated['title'],
+            'body' => $validated['body'],
+            'status' => 'available',
+            'premium' => $premium
+        ]);
     }
 
     /**
@@ -48,7 +67,10 @@ class AdvertisementController extends Controller
      */
     public function show(advertisement $advertisement)
     {
-        //
+        return view('advertisement/show', [
+            'advertisement' => $advertisement,
+            'biddings' => Bidding::where('advertisement_id', '=', $advertisement->id)->orderby('bidding', 'desc')->get()
+        ]);
     }
 
     /**

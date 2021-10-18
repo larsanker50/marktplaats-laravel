@@ -35,3 +35,12 @@
 .sold_text {
     font-size: large;
 }
+
+.biddings {
+    border-style: dashed;
+    border-width: 2px;
+    border-color: black;
+    max-width: 30%;
+    margin-bottom: 1em;
+    line-height: 10px;
+}

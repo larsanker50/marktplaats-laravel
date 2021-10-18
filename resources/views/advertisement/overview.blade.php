@@ -3,7 +3,8 @@
     @section ('header')
 
     <ul>
-        <li><a href="/">overview</a></li>
+        <li><b><a href="{{ route('advertisement.index') }}">overview</a></b></li>
+        <li><a href="{{ route('advertisement.create') }}">create advertisement</a></li>
 
     </ul>
     @endsection    
@@ -33,7 +34,7 @@
             @elseif ($advertisement->status == 'sold')
             <p>Advertisement sold at {{ $advertisement->updated_at }}</p>
             @endif
-            <a href="/">view advertisement details</a>
+            <a href="{{ route('advertisement.show', ['advertisement' => $advertisement->id] ) }}">view advertisement details</a>
         </div>
     @endforeach
 

@@ -42,3 +42,12 @@ route::post('authentication/authenticate', [ AuthenticationController::class,
 
 route::get('advertisement/index', [ AdvertisementController::class,
 'index'])->name('advertisement.index');
+
+route::get('advertisement/show/{advertisement}', [ AdvertisementController::class,
+'show'])->name('advertisement.show');
+
+route::get('advertisement/create', [ AdvertisementController::class,
+'create'])->name('advertisement.create');
+
+route::post('advertisement/store', [ AdvertisementController::class,
+'store'])->name('advertisement.store');
