@@ -9,7 +9,10 @@ class Rubric extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function advertisement() {
+
         return $this->belongsToMany(Advertisement::class);
     }
 }

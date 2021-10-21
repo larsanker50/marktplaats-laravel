@@ -39,7 +39,6 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-
         $residence = $validated['street_name'] . ' ' . $validated['house_number'] . ' ' . $validated['city'];
 
         User::create([

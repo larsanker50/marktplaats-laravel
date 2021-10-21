@@ -3,15 +3,15 @@
     @section ('header')
 
     <ul>
+        <li><a href="{{ route('authentication.logout') }}">logout</a></li>
         <li><b><a href="{{ route('advertisement.index') }}">overview</a></b></li>
         <li><a href="{{ route('advertisement.create') }}">create advertisement</a></li>
-
     </ul>
     @endsection    
     
     @section ('body')
 
-    <p>welkom</p>
+    <p>welkom {{ Session::get('current_username') }}</p>
     
     <p>overview</p>
   

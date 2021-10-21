@@ -26,7 +26,7 @@ class StoreAdvertisementRequest extends FormRequest
         return [
             'title' => 'required',
             'body' => 'required',
-            'rubric' => 'required_without:new_rubric|array',
+            'rubric' => 'required_without:new_rubric|array|nullable',
             'new_rubric' => 'required_without:rubric|nullable|',
             'premium' => 'nullable|string'
         ];

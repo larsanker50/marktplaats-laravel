@@ -12,6 +12,14 @@ class AuthenticationController extends Controller
         return view('authenticate/login');
     }
 
+    public function logout() {
+
+        session(['current_username' => null]);
+        session(['current_user_id' => null]);
+
+        return view('user.index');
+    }
+
     public function authenticate(Request $request) {
 
         $credentials = $request->validate([
@@ -20,6 +28,11 @@ class AuthenticationController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+
+            $user = User::where('username', '=', request('username'))->first();
+
+            session(['current_username' => request('username')]);
+            session(['current_user_id' => $user->id]);
 
             return redirect('advertisement/index');
         }

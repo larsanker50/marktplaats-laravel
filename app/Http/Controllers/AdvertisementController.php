@@ -15,10 +15,11 @@ class AdvertisementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         return view('advertisement/overview', [
-            'advertisements' => Advertisement::orderBy('status', 'asc')->orderBy('premium', 'desc')->get(),
+            'advertisements' => Advertisement::orderBy('status', 'asc')->orderBy('premium', 'desc')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 
@@ -44,19 +45,35 @@ class AdvertisementController extends Controller
     {
         $validated = $request->validated();
 
-
-        if ($validated['premium'] === "true") {
+        if (request('premium') === "true") {
             $premium = true;
         } else {
             $premium = false;
         }
 
         Advertisement::create([
+            'user_id' => $request->session()->get('current_user_id'),
             'title' => $validated['title'],
             'body' => $validated['body'],
             'status' => 'available',
             'premium' => $premium
         ]);
+        $advertisement = Advertisement::latest()->first();
+        
+        if ($validated['new_rubric'] !== null) {
+            Rubric::firstOrCreate([
+                'name' => $validated['new_rubric']
+            ]);
+
+            $new_rubric = Rubric::where('name', '=', $validated['new_rubric'])->first();
+            $advertisement->rubric()->attach($new_rubric->id);
+        }
+
+        if (isset($validated['rubric'])) {
+            $advertisement->rubric()->attach($validated['rubric']);
+        }
+        
+        return redirect('advertisement/index');
     }
 
     /**

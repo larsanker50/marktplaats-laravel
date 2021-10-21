@@ -35,6 +35,9 @@ route::post('user/store', [ UserController::class,
 route::get('authentication/login', [ AuthenticationController::class,
 'login'])->name('authentication.login');
 
+route::get('authentication/logout', [ AuthenticationController::class,
+'logout'])->name('authentication.logout');
+
 route::post('authentication/authenticate', [ AuthenticationController::class,
 'authenticate'])->name('authentication.authenticate');
 
