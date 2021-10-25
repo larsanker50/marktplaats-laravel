@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bidding;
+use App\Models\Advertisement;
+use App\Http\Requests\StoreBiddingRequest;
 use Illuminate\Http\Request;
 
 class BiddingController extends Controller
@@ -33,9 +35,17 @@ class BiddingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBiddingRequest $request, advertisement $advertisement)
     {
-        //
+        $validated = $request->validated();
+        
+        Bidding::create([
+            'user_id' => $request->session()->get('current_user_id'),
+            'advertisement_id' => $advertisement->id,
+            'bidding' => $validated['bidding'],
+        ]);
+
+        return redirect('advertisement/index');
     }
 
     /**

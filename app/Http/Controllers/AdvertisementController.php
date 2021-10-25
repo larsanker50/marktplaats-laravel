@@ -98,7 +98,11 @@ class AdvertisementController extends Controller
      */
     public function edit(advertisement $advertisement)
     {
-        //
+
+        return view('advertisement/edit', [
+            'advertisement' => $advertisement,
+            'rubrics' => Rubric::orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -108,9 +112,36 @@ class AdvertisementController extends Controller
      * @param  \App\Models\advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, advertisement $advertisement)
+    public function update(StoreAdvertisementRequest $request, advertisement $advertisement)
     {
-        //
+        $validated = $request->validated();
+
+        if (request('premium') === "true") {
+            $premium = true;
+        } else {
+            $premium = false;
+        }
+
+        Advertisement::where('id', '=', $advertisement->id)->update([
+            'title' => $validated['title'],
+            'body' => $validated['body'],
+            'status' => $validated['status'],
+            'premium' => $premium
+        ]);
+
+        if (isset($validated['rubric'])) {
+            $advertisement->rubric()->sync($validated['rubric']);
+        }
+
+        if ($validated['new_rubric'] !== null) {
+            Rubric::firstOrCreate([
+                'name' => $validated['new_rubric']
+            ]);
+            $new_rubric = Rubric::where('name', '=', $validated['new_rubric'])->first();
+            $advertisement->rubric()->attach($new_rubric->id);
+        }
+
+        return redirect('advertisement/index');
     }
 
     /**
@@ -119,8 +150,28 @@ class AdvertisementController extends Controller
      * @param  \App\Models\advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(advertisement $advertisement)
+    public function destroy(advertisement $advertisement, Request $request)
     {
-        //
+
+        $advertisement->delete();
+        
+        return view('advertisement/personal_overview', [
+            'advertisements' => Advertisement::where('user_id', '=', $request->session()->get('current_user_id'))
+                ->orderBy('status', 'asc')
+                ->orderBy('premium', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->get(),
+        ]);
+    }
+
+    public function personal_index(Request $request)
+    {
+        return view('advertisement/personal_overview', [
+            'advertisements' => Advertisement::where('user_id', '=', $request->session()->get('current_user_id'))
+                ->orderBy('status', 'asc')
+                ->orderBy('premium', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->get(),
+        ]);
     }
 }

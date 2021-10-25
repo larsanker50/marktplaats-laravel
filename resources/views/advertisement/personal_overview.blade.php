@@ -4,17 +4,17 @@
 
     <ul>
         <li><a href="{{ route('authentication.logout') }}">logout</a></li>
-        <li><b><a href="{{ route('advertisement.index') }}">overview</a></b></li>
+        <li><a href="{{ route('advertisement.index') }}">overview</a></li>
         <li><a href="{{ route('advertisement.create') }}">create advertisement</a></li>
-        <li><a href="{{ route('advertisement.personal_index') }}">my advertisements</a></li>
+        <li><b><a href="{{ route('advertisement.personal_index') }}">my advertisements</a></b></li>
     </ul>
     @endsection    
     
     @section ('body')
 
-    <p>welkom {{ Session::get('current_username') }}</p>
+    <p>advertisements from you: {{ Session::get('current_username') }}</p>
     
-    <p>overview</p>
+    <p>overview personal advertisements</p>
   
     
     @foreach ($advertisements as $advertisement)

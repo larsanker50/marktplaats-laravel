@@ -46,6 +46,9 @@ route::post('authentication/authenticate', [ AuthenticationController::class,
 route::get('advertisement/index', [ AdvertisementController::class,
 'index'])->name('advertisement.index');
 
+route::get('advertisement/personal_index', [ AdvertisementController::class,
+'personal_index'])->name('advertisement.personal_index');
+
 route::get('advertisement/show/{advertisement}', [ AdvertisementController::class,
 'show'])->name('advertisement.show');
 
@@ -54,3 +57,17 @@ route::get('advertisement/create', [ AdvertisementController::class,
 
 route::post('advertisement/store', [ AdvertisementController::class,
 'store'])->name('advertisement.store');
+
+route::get('advertisement/edit/{advertisement}', [ AdvertisementController::class,
+'edit'])->name('advertisement.edit');
+
+route::get('advertisement/destroy/{advertisement}', [ AdvertisementController::class,
+'destroy'])->name('advertisement.destroy');
+
+route::post('advertisement/update/{advertisement}', [ AdvertisementController::class,
+'update'])->name('advertisement.update');
+
+//biddingcontroller
+
+route::post('bidding/store/{advertisement}', [ BiddingController::class,
+'store'])->name('bidding.store');

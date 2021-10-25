@@ -5,6 +5,7 @@
     <ul>
         <li><a href="{{ route('advertisement.index') }}">overview</a></li>
         <li><b><a href="{{ route('advertisement.create') }}">create advertisement</a></b></li>
+        <li><a href="{{ route('advertisement.personal_index') }}">my advertisements</a></li>
 
     </ul>
     @endsection    
