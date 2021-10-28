@@ -25,7 +25,7 @@
         </p>
         <p>Seller: {{ $advertisement->user->username}} 
         @if ($advertisement->user->id !== Session::get('current_user_id'))
-            <a href="">message user</a></p>
+            <a href="{{ route('message.index', ['user' => $advertisement->user_id] ) }}">message user</a></p>
         @endif
 
         <p class="body">{{ $advertisement->body }}</p>
@@ -45,9 +45,9 @@
         @foreach ($biddings as $bidding)
         <p>{{ $bidding->user->username }} €{{ $bidding->bidding }} 
         @if ($bidding->user->id !== Session::get('current_user_id'))    
-        <a href="">message user</a></p>
+        <a href="{{ route('message.index', ['user' => $bidding->user->id] ) }}">message user</a></p>
         @elseif ($bidding->user->id === Session::get('current_user_id'))
-        | <a href="">delete bidding</a></p>
+        | <a href="{{ route('bidding.destroy', ['advertisement' => $advertisement->id, 'bidding' => $bidding->id] ) }}">delete bidding</a></p>
         @endif
 
         @endforeach

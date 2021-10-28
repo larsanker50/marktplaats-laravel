@@ -44,3 +44,61 @@
     margin-bottom: 1em;
     line-height: 10px;
 }
+
+.message {
+    background-color: #fff;
+    border: 1px solid #000000;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    margin: 1rem;
+    max-width: 600px;
+    padding: 0.5rem 1.5rem;
+}
+.message p {
+    border-radius: 1.15rem;
+    line-height: 1.25;
+    max-width: 75%;
+  }
+
+.message p::before,
+.message p::after {
+    bottom: -0.1rem;
+    content: "";
+    height: 1rem;
+}
+
+.send {
+    background-color: #248bf5;
+    color: #fff;
+    margin: auto;
+
+}
+
+.send::before {
+    border-bottom-left-radius: 0.8rem 0.7rem;
+    border-right: 1rem solid #248bf5;
+    right: -0.35rem;
+    transform: translate(0, -0.1rem);
+}
+
+.send::after {
+    background-color: #fff;
+    border-bottom-left-radius: 0.5rem;
+    right: -40px;
+    transform:translate(-30px, -2px);
+    width: 10px;
+}
+
+.center {
+    border-style: groove;
+    border-width: 2px;
+    border-color: black;
+    width:fit-content;
+    margin-bottom: 1em;
+    line-height: 10px;
+    margin: auto;
+}
+
+.body {
+    font-size: large;
+}

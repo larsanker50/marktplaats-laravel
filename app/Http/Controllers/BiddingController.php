@@ -45,7 +45,9 @@ class BiddingController extends Controller
             'bidding' => $validated['bidding'],
         ]);
 
-        return redirect('advertisement/index');
+        return redirect()->route('advertisement.show', ['advertisement' => $advertisement->id] );
+
+        
     }
 
     /**
@@ -88,8 +90,10 @@ class BiddingController extends Controller
      * @param  \App\Models\Bidding  $bidding
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bidding $bidding)
+    public function destroy(advertisement $advertisement, Bidding $bidding)
     {
-        //
+        Bidding::destroy($bidding->id);
+
+        return redirect()->route('advertisement.show', ['advertisement' => $advertisement->id] );
     }
 }

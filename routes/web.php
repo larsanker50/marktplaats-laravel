@@ -71,3 +71,15 @@ route::post('advertisement/update/{advertisement}', [ AdvertisementController::c
 
 route::post('bidding/store/{advertisement}', [ BiddingController::class,
 'store'])->name('bidding.store');
+
+route::get('bidding/destroy/{advertisement}/{bidding}', [ BiddingController::class,
+'destroy'])->name('bidding.destroy');
+
+//messagecontroller
+
+route::get('message/index/{user}', [ MessageController::class,
+'index'])->name('message.index');
+
+route::post('message/store/{user}', [ MessageController::class,
+'store'])->name('message.store');
+
