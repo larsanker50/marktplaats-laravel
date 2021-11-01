@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\User;
+use App\Mail\SendMessageMail;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMessageRequest;
+use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller
 {
@@ -52,7 +54,12 @@ class MessageController extends Controller
             'body' => $validated['body'],
         ]);
 
-        
+        $from_user = user::where('id', '=', $request->session()->get('current_user_id'))->first();
+        $to_user = $user;
+        $body = $request->body;
+
+        Mail::to($user->email)->send(new SendMessageMail($from_user, $to_user, $body));
+
         return redirect()->route('message.index', ['user' => $user->id] );
     }
 

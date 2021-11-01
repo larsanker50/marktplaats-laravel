@@ -44,7 +44,7 @@
                 <textarea class ="input" type="text" name="body" id="body" value="{{ old('body') }}"> </textarea>
             </div>
             <p class="help is-danger">{{ $errors->first('message') }}</p>
-            <input class ="input" type="submit" value="submit bidding">
+            <input class ="input" type="submit" value="submit message">
             </form>
     </div>
     

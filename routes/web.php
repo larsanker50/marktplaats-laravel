@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\BiddingController;
@@ -82,4 +83,3 @@ route::get('message/index/{user}', [ MessageController::class,
 
 route::post('message/store/{user}', [ MessageController::class,
 'store'])->name('message.store');
-
