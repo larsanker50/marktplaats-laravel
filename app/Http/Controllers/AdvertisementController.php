@@ -17,9 +17,9 @@ class AdvertisementController extends Controller
      */
     public function index(Request $request)
     {
-
         return view('advertisement/overview', [
             'advertisements' => Advertisement::orderBy('status', 'asc')->orderBy('premium', 'desc')->orderBy('created_at', 'desc')->get(),
+            'rubrics' => Rubric::select(array('id', 'name'))->get()
         ]);
     }
 
@@ -172,6 +172,26 @@ class AdvertisementController extends Controller
                 ->orderBy('premium', 'desc')
                 ->orderBy('created_at', 'desc')
                 ->get(),
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->search == null) {
+            $advertisements = Advertisement::orderBy('status', 'asc')->orderBy('premium', 'desc')->orderBy('created_at', 'desc')->get();
+        } else {
+            $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
+                return $query->where('id', '=', $request->rubric);
+            })->orderBy('status', 'asc')
+                ->orderBy('premium', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        return view('advertisement/search', [
+            'advertisements' => $advertisements,
+            'rubrics' => Rubric::select(array('id', 'name'))->get(),
+            'request' => $request
         ]);
     }
 }

@@ -7,6 +7,11 @@
         <li><b><a href="{{ route('advertisement.create') }}">create advertisement</a></b></li>
         <li><a href="{{ route('advertisement.personal_index') }}">my advertisements</a></li>
 
+        <form id="form"> 
+            <input type="search" id="query" name="q" placeholder="Search...">
+            <button>Search</button>
+        </form>
+
     </ul>
     @endsection    
     

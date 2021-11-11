@@ -68,6 +68,9 @@ route::get('advertisement/destroy/{advertisement}', [ AdvertisementController::c
 route::post('advertisement/update/{advertisement}', [ AdvertisementController::class,
 'update'])->name('advertisement.update');
 
+route::get('advertisement/search', [ AdvertisementController::class,
+'search'])->name('advertisement.search');
+
 //biddingcontroller
 
 route::post('bidding/store/{advertisement}', [ BiddingController::class,
