@@ -38,7 +38,7 @@
 <div id="results">
     <p>search results for:</P>
     <p>query:       {{ $request->search }};</p> 
-    <p>rubric:      {{ $request->rubric }};</p>
+    <p>rubric:      {{ $current_rubric_name }};</p>
     <p>within:    {{ $request->distance}} km:</p>
 </div>
 

@@ -51,6 +51,8 @@ class AdvertisementController extends Controller
             $premium = false;
         }
 
+       
+
         Advertisement::create([
             'user_id' => $request->session()->get('current_user_id'),
             'title' => $validated['title'],
@@ -98,7 +100,6 @@ class AdvertisementController extends Controller
      */
     public function edit(advertisement $advertisement)
     {
-
         return view('advertisement/edit', [
             'advertisement' => $advertisement,
             'rubrics' => Rubric::orderBy('name')->get(),
@@ -166,6 +167,7 @@ class AdvertisementController extends Controller
 
     public function personal_index(Request $request)
     {
+
         return view('advertisement/personal_overview', [
             'advertisements' => Advertisement::where('user_id', '=', $request->session()->get('current_user_id'))
                 ->orderBy('status', 'asc')
@@ -177,20 +179,60 @@ class AdvertisementController extends Controller
 
     public function search(Request $request)
     {
-        if ($request->search == null) {
-            $advertisements = Advertisement::orderBy('status', 'asc')->orderBy('premium', 'desc')->orderBy('created_at', 'desc')->get();
-        } else {
-            $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
-                return $query->where('id', '=', $request->rubric);
-            })->orderBy('status', 'asc')
-                ->orderBy('premium', 'desc')
-                ->orderBy('created_at', 'desc')
-                ->get();
+        $search_regex = "(?:^|\W)$request->search(?:$|\W)";
+
+        switch (true) {
+            case ($request->search == null && $request->rubric == "all" && $request->distance == "all"):
+                $advertisements = Advertisement::orderBy('status', 'asc')->orderBy('premium', 'desc')->orderBy('created_at', 'desc')->get();
+                $current_rubric_name = 'all';
+                break;
+            case ($request->search == null && $request->distance == "all"):
+                $current_rubric_name = Rubric::where('id', '=', $request->rubric)->first()->name;
+                $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
+                    return $query->where('id', '=', $request->rubric);
+                                })->orderBy('status', 'asc')
+                                ->orderBy('premium', 'desc')
+                                ->orderBy('created_at', 'desc')
+                                ->get();
+                break;
+            case ($request->rubric == "all" && $request->distance == "all"):
+                $current_rubric_name = 'all';
+
+                $advertisements = Advertisement::where('title', 'regexp', $search_regex)->get();
+
+                break;
+            case ($request->search == null && $request->rubric == "all"):
+                $current_rubric_name = 'all';
+
+                break;
+            case ($request->search == null):
+                $current_rubric_name = Rubric::where('id', '=', $request->rubric)->first()->name;
+
+                break;
+            case ($request->rubric == "all"):
+                $current_rubric_name = 'all';
+
+                break;
+            case ($request->distance == "all"):
+                $current_rubric_name = Rubric::where('id', '=', $request->rubric)->first()->name;
+
+                $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
+                    return $query->where('id', '=', $request->rubric);
+                                })->where('title', 'regexp', $search_regex)
+                                ->orderBy('status', 'asc')
+                                ->orderBy('premium', 'desc')
+                                ->orderBy('created_at', 'desc')
+                                ->get();
+
+                break;
+            default:
+                dd('test mislukt');
         }
 
         return view('advertisement/search', [
             'advertisements' => $advertisements,
             'rubrics' => Rubric::select(array('id', 'name'))->get(),
+            'current_rubric_name' => $current_rubric_name,
             'request' => $request
         ]);
     }
