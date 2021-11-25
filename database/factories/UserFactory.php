@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'password' => bcrypt('password'),
             'email' => $this->faker->unique()->safeEmail,
             'residence' => $this->faker->unique()->address,
-            'postal_code' => rand(1000,9999),
+            'postalcode_id' => $this->faker->numberBetween($min = 1, $max = 4699),
         ];
     }
 }

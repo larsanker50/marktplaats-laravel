@@ -19,7 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('email')->unique()->nullable();
             $table->string('residence');
-            $table->string('postal_code');
+            $table->unsignedInteger('postalcode_id');
+            $table->foreign('postalcode_id')->references('id')->on('postalcodes');
             $table->timestamps();
         });
     }

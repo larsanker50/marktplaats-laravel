@@ -204,6 +204,10 @@ class AdvertisementController extends Controller
             case ($request->search == null && $request->rubric == "all"):
                 $current_rubric_name = 'all';
 
+                $advertisements = Postalcode::all()->get();
+
+                dd($advertisement);
+
                 break;
             case ($request->search == null):
                 $current_rubric_name = Rubric::where('id', '=', $request->rubric)->first()->name;

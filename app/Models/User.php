@@ -30,4 +30,9 @@ class User extends Model implements AuthenticatableContract
         return $this->hasMany(Message::class, 'to_user_id');
     }
 
+    public function postalcode() {
+        return $this->hasOne(Postalcode::class, 'postalcode_id');
+    }
+
+
 }

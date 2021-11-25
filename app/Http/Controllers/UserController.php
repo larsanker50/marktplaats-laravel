@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Postalcode;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
 
@@ -41,13 +42,16 @@ class UserController extends Controller
         $residence = $validated['street_name'] . ' ' . $validated['house_number'] . ' ' . $validated['city'];
 
         $postal_code = substr($validated['postal_code'],0,4);
+        $postal_code_id = Postalcode::where('postcode', '=', $postal_code)->first();
+
+        dd($postal_code_id->id);
 
         User::create([
             'email' => $validated['email'],
             'username' => $validated['username'],
             'password' => bcrypt($validated['password']),
             'residence' => $residence,
-            'postal_code' => $postal_code,
+            'postal_code_id' => $postal_code_id,
         ]);
 
         return redirect('/');

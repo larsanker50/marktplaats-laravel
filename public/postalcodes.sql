@@ -20,12 +20,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table 4pp
+# Dump of table postalcodes
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `4pp`;
+DROP TABLE IF EXISTS `postalcodes`;
 
-CREATE TABLE `4pp` (
+CREATE TABLE `postalcodes` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `postcode` int(11) DEFAULT NULL,
   `woonplaats` tinytext COLLATE utf8_unicode_ci,
@@ -39,10 +39,10 @@ CREATE TABLE `4pp` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `4pp` WRITE;
-/*!40000 ALTER TABLE `4pp` DISABLE KEYS */;
+LOCK TABLES `postalcodes` WRITE;
+/*!40000 ALTER TABLE `postalcodes` DISABLE KEYS */;
 
-INSERT INTO `4pp` (`id`, `postcode`, `woonplaats`, `alternatieve_schrijfwijzen`, `gemeente`, `provincie`, `netnummer`, `latitude`, `longitude`, `soort`)
+INSERT INTO `postalcodes` (`id`, `postcode`, `woonplaats`, `alternatieve_schrijfwijzen`, `gemeente`, `provincie`, `netnummer`, `latitude`, `longitude`, `soort`)
 VALUES
 	(1,1000,'Amsterdam','','Amsterdam','Noord-Holland','020',52.3362429,4.8694444,'Postbus'),
 	(2,1001,'Amsterdam','','Amsterdam','Noord-Holland','020',52.36424,4.883358,'Postbus'),
@@ -2759,7 +2759,7 @@ VALUES
 	(2713,6295,'Lemiers','','Vaals','Limburg','043',50.7854894,5.9924527,'Adres'),
 	(2714,6300,'Valkenburg','','Valkenburg aan de Geul','Limburg','043',50.8629533,5.8332814,'Postbus');
 
-INSERT INTO `4pp` (`id`, `postcode`, `woonplaats`, `alternatieve_schrijfwijzen`, `gemeente`, `provincie`, `netnummer`, `latitude`, `longitude`, `soort`)
+INSERT INTO `postalcodes` (`id`, `postcode`, `woonplaats`, `alternatieve_schrijfwijzen`, `gemeente`, `provincie`, `netnummer`, `latitude`, `longitude`, `soort`)
 VALUES
 	(2715,6301,'Valkenburg','','Valkenburg aan de Geul','Limburg','043',50.8652306,5.8320515,'Adres'),
 	(2716,6305,'Schin op Geul','','Valkenburg aan de Geul','Limburg','043',50.8537836,5.873265,'Adres'),
@@ -4747,7 +4747,7 @@ VALUES
 	(4698,9998,'Rottum','','Eemsmond','Groningen','0595',53.3829417,6.6200842,'Adres'),
 	(4699,9999,'Stitswerd','','Eemsmond','Groningen','0595',53.3608768,6.5992932,'Adres');
 
-/*!40000 ALTER TABLE `4pp` ENABLE KEYS */;
+/*!40000 ALTER TABLE `postalcodes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

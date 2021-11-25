@@ -13,7 +13,7 @@ class CreatePostalcodesTable extends Migration
      */
     public function up()
     {
-        DB::unprepared(file_get_contents('public\4pp.sql'));
+        DB::unprepared(file_get_contents('public\postalcodes.sql'));
     }
 
     /**
