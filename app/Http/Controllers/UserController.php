@@ -41,17 +41,14 @@ class UserController extends Controller
 
         $residence = $validated['street_name'] . ' ' . $validated['house_number'] . ' ' . $validated['city'];
 
-        $postal_code = substr($validated['postal_code'],0,4);
-        $postal_code_id = Postalcode::where('postcode', '=', $postal_code)->first();
-
-        dd($postal_code_id->id);
+        $postalcode = Postalcode::where('postcode', '=', substr($validated['postalcode'],0,4))->first();
 
         User::create([
             'email' => $validated['email'],
             'username' => $validated['username'],
             'password' => bcrypt($validated['password']),
             'residence' => $residence,
-            'postal_code_id' => $postal_code_id,
+            'postalcode_id' => $postalcode->id,
         ]);
 
         return redirect('/');

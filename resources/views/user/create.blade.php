@@ -52,8 +52,8 @@
     </div>
     <p>postal code*:</p>
     <div>
-        <input class ="input" type="text" name="postal_code" id="postal_code" placeholder="postal code" value="{{ old('postal_code') }}" >
-        <p class="help is-danger">{{ $errors->first('postal_code') }}</p>
+        <input class ="input" type="text" name="postalcode" id="postalcode" placeholder="postalcode" value="{{ old('postalcode') }}" >
+        <p class="help is-danger">{{ $errors->first('postalcode') }}</p>
     </div>
 
    <p><i>* is required</i></p>

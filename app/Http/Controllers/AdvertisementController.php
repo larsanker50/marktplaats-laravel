@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
 use App\Models\Bidding;
+use App\Models\Postalcode;
+use App\Models\User;
 use App\Models\Rubric;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAdvertisementRequest;
@@ -203,10 +205,20 @@ class AdvertisementController extends Controller
                 break;
             case ($request->search == null && $request->rubric == "all"):
                 $current_rubric_name = 'all';
+                $current_user = User::where('id', '=', session()->get('current_user_id'))->first();
+                $current_user_postalcode = Postalcode::where('id', '=', $current_user->postalcode_id)->first();
+                $degrees_distance = $request->distance * 0.008;
+                $max_longitude = $current_user_postalcode->longitude + $degrees_distance;
+                $min_longitude = $current_user_postalcode->longitude - $degrees_distance;
+                $max_latitude = $current_user_postalcode->latitude + $degrees_distance;
+                $min_latitude = $current_user_postalcode->latitude - $degrees_distance;
+                
+                dump($max_longitude);
+                dump($min_longitude);
+                dump($max_latitude);
+                dd($min_latitude);
 
-                $advertisements = Postalcode::all()->get();
-
-                dd($advertisement);
+                dd($advertisements);
 
                 break;
             case ($request->search == null):

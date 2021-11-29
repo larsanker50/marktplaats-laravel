@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\IsPostalCode;
 
 class StoreUserRequest extends FormRequest
 {
@@ -30,7 +31,7 @@ class StoreUserRequest extends FormRequest
             'house_number' => 'required',
             'street_name' => 'required',
             'city' => 'required',
-            'postal_code' => 'required'
+            'postalcode' => ['required', new IsPostalCode],
         ];
     }
 }
