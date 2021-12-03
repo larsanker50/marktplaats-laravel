@@ -4,7 +4,7 @@
 
     <ul>
         <li><a href="{{ route('authentication.logout') }}">logout</a></li>
-        <li><b><a href="{{ route('advertisement.index') }}">overview</a></b></li>
+        <li><b><a href="{{ route('advertisement.index', ['page_number' => 1]) }}">overview</a></b></li>
         <li><a href="{{ route('advertisement.create') }}">create advertisement</a></li>
         <li><a href="{{ route('advertisement.personal_index') }}">my advertisements</a></li>
     </ul>
@@ -61,6 +61,20 @@
             @endif
             <a href="{{ route('advertisement.show', ['advertisement' => $advertisement->id] ) }}">view advertisement details</a>
         </div>
+    @endforeach
+
+
+    @csrf
+    @php
+        $i = 0
+    @endphp
+    @foreach ($all_advertisements as $advertisement)
+    @if ($loop->index % 10 == 0 )
+    @php
+        $i++
+    @endphp
+        <button><a href="{{ route('advertisement.index', ['page_number' => $i] ) }}">{{$i}}</a></button>
+    @endif
     @endforeach
 
     @endsection

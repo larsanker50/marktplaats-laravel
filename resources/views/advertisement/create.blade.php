@@ -3,7 +3,7 @@
     @section ('header')
 
     <ul>
-        <li><a href="{{ route('advertisement.index') }}">overview</a></li>
+        <li><a href="{{ route('advertisement.index', ['page_number' => 1]) }}">overview</a></li>
         <li><b><a href="{{ route('advertisement.create') }}">create advertisement</a></b></li>
         <li><a href="{{ route('advertisement.personal_index') }}">my advertisements</a></li>
 

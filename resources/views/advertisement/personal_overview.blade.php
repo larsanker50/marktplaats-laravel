@@ -4,7 +4,7 @@
 
     <ul>
         <li><a href="{{ route('authentication.logout') }}">logout</a></li>
-        <li><a href="{{ route('advertisement.index') }}">overview</a></li>
+        <li><a href="{{ route('advertisement.index', ['page_number' => 1]) }}">overview</a></li>
         <li><a href="{{ route('advertisement.create') }}">create advertisement</a></li>
         <li><b><a href="{{ route('advertisement.personal_index') }}">my advertisements</a></b></li>
     </ul>

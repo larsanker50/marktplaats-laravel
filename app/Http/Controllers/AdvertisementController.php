@@ -18,11 +18,21 @@ class AdvertisementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $page_number)
     {
+
+        $skip = $page_number * 10 - 10;
+        $advertisements = Advertisement::orderBy('status', 'asc')
+                                            ->orderBy('premium', 'desc')
+                                            ->orderBy('created_at', 'desc')
+                                            ->skip($skip)
+                                            ->take(10)
+                                            ->get();
         return view('advertisement/overview', [
-            'advertisements' => Advertisement::orderBy('status', 'asc')->orderBy('premium', 'desc')->orderBy('created_at', 'desc')->get(),
-            'rubrics' => Rubric::select(array('id', 'name'))->get()
+            'advertisements' => $advertisements,
+            'all_advertisements' => $all_advertisements = Advertisement::get(),
+            'rubrics' => Rubric::select(array('id', 'name'))->get(),
+            'page_number' => $page_number,
         ]);
     }
 
@@ -78,7 +88,7 @@ class AdvertisementController extends Controller
             $advertisement->rubric()->attach($validated['rubric']);
         }
         
-        return redirect('advertisement/index');
+        return redirect()->route('advertisement.index', ['page_number' => 1] );
     }
 
     /**
@@ -145,7 +155,7 @@ class AdvertisementController extends Controller
             $advertisement->rubric()->attach($new_rubric->id);
         }
 
-        return redirect('advertisement/index');
+        return redirect()->route('advertisement.index', ['page_number' => 1] );
     }
 
     /**

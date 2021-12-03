@@ -15,7 +15,7 @@ class AdvertisementSeeder extends Seeder
      */
     public function run()
     {
-        Advertisement::factory(10)->create()->each(function ($advertisement) {
+        Advertisement::factory(40)->create()->each(function ($advertisement) {
             $rubric = Rubric::factory(2)->create();
             $advertisement->rubric()->saveMany($rubric);
         });

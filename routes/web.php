@@ -44,7 +44,7 @@ route::post('authentication/authenticate', [ AuthenticationController::class,
 
 //advertisementcontroller
 
-route::get('advertisement/index', [ AdvertisementController::class,
+route::get('advertisement/index/{page_number}', [ AdvertisementController::class,
 'index'])->name('advertisement.index');
 
 route::get('advertisement/personal_index', [ AdvertisementController::class,

@@ -34,7 +34,7 @@ class AuthenticationController extends Controller
             session(['current_username' => request('username')]);
             session(['current_user_id' => $user->id]);
 
-            return redirect('advertisement/index');
+            return redirect()->route('advertisement.index', ['page_number' => 1] );
         }
 
         return back()->withErrors([
