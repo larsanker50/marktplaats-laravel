@@ -11,16 +11,20 @@ class Advertisement extends Model
 
     protected $fillable = ['title', 'body', 'status', 'premium', 'user_id'];
 
-    public function user() {
+    // CR :: je zou best via eagerloading altijd alle biddings of categorieen er bij kunnen laden
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function rubric() {
+    public function rubric()
+    {
         return $this->belongsToMany(Rubric::class);
     }
 
-    public function bidding() {
+    public function bidding()
+    {
         return $this->hasMany(Bidding::class);
     }
-
 }

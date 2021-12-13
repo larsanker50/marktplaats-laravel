@@ -23,11 +23,11 @@ class AdvertisementController extends Controller
 
         $skip = $page_number * 10 - 10;
         $advertisements = Advertisement::orderBy('status', 'asc')
-                                            ->orderBy('premium', 'desc')
-                                            ->orderBy('created_at', 'desc')
-                                            ->skip($skip)
-                                            ->take(10)
-                                            ->get();
+            ->orderBy('premium', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->skip($skip)
+            ->take(10)
+            ->get();
         return view('advertisement/overview', [
             'advertisements' => $advertisements,
             'all_advertisements' => $all_advertisements = Advertisement::get(),
@@ -64,7 +64,7 @@ class AdvertisementController extends Controller
             $premium = false;
         }
 
-       
+
 
         Advertisement::create([
             'user_id' => $request->session()->get('current_user_id'),
@@ -74,8 +74,9 @@ class AdvertisementController extends Controller
             'premium' => $premium
         ]);
         $advertisement = Advertisement::latest()->first();
-        
+
         if ($validated['new_rubric'] !== null) {
+            // CR :: volgens mij krijg je het ID van de nieuwe record terug als je een create doet ($new_rubric = Rubric::firstOrCreate([...), dan hoef je hem later niet nog is op te halen
             Rubric::firstOrCreate([
                 'name' => $validated['new_rubric']
             ]);
@@ -87,8 +88,8 @@ class AdvertisementController extends Controller
         if (isset($validated['rubric'])) {
             $advertisement->rubric()->attach($validated['rubric']);
         }
-        
-        return redirect()->route('advertisement.index', ['page_number' => 1] );
+
+        return redirect()->route('advertisement.index', ['page_number' => 1]);
     }
 
     /**
@@ -99,6 +100,7 @@ class AdvertisementController extends Controller
      */
     public function show(advertisement $advertisement)
     {
+        // CR :: kan je niet via ->load('biddings') gelijk alles mee terug geven?
         return view('advertisement/show', [
             'advertisement' => $advertisement,
             'biddings' => Bidding::where('advertisement_id', '=', $advertisement->id)->orderby('bidding', 'desc')->get()
@@ -155,7 +157,7 @@ class AdvertisementController extends Controller
             $advertisement->rubric()->attach($new_rubric->id);
         }
 
-        return redirect()->route('advertisement.index', ['page_number' => 1] );
+        return redirect()->route('advertisement.index', ['page_number' => 1]);
     }
 
     /**
@@ -168,7 +170,7 @@ class AdvertisementController extends Controller
     {
 
         $advertisement->delete();
-        
+
         return view('advertisement/personal_overview', [
             'advertisements' => Advertisement::where('user_id', '=', $request->session()->get('current_user_id'))
                 ->orderBy('status', 'asc')
@@ -182,6 +184,7 @@ class AdvertisementController extends Controller
     {
 
         return view('advertisement/personal_overview', [
+            // CR :: kan je de Auth:: niet gebruiken om je user id op te halen?
             'advertisements' => Advertisement::where('user_id', '=', $request->session()->get('current_user_id'))
                 ->orderBy('status', 'asc')
                 ->orderBy('premium', 'desc')
@@ -192,7 +195,7 @@ class AdvertisementController extends Controller
 
     public function search(Request $request)
     {
-
+        // CR :: ik heb niet alles doorgenomen maar dit moet korter kunnen :)
 
         $search_regex = "(?:^|\W)$request->search(?:$|\W)";
 
@@ -203,12 +206,12 @@ class AdvertisementController extends Controller
                 break;
             case ($request->search == null && $request->distance == "all"): // search on rubric
                 $current_rubric_name = Rubric::where('id', '=', $request->rubric)->first()->name;
-                $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
+                $advertisements = Advertisement::whereHas('rubric', function ($query) use ($request) {
                     return $query->where('id', '=', $request->rubric);
-                                })->orderBy('status', 'asc')
-                                ->orderBy('premium', 'desc')
-                                ->orderBy('created_at', 'desc')
-                                ->get();
+                })->orderBy('status', 'asc')
+                    ->orderBy('premium', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
                 break;
             case ($request->rubric == "all" && $request->distance == "all"): // search on regex search
                 $current_rubric_name = 'all';
@@ -225,22 +228,22 @@ class AdvertisementController extends Controller
                 $postalcodesWithinRange = $enteredPostalcode->getPostalcodesByDistance($distance); //Gets all postalcodes (id) within range.
                 $usersWithinRange = User::whereIn('postalcode_id', $postalcodesWithinRange)->get(); //Gets all users within this postalcode range.
                 $userIDs = new Collection();
-                foreach($usersWithinRange as $user){
+                foreach ($usersWithinRange as $user) {
                     $userIDs->push($user->id); //Creates new collection with only ID's of users within range for iteration.
                 }
                 $advertisements = new Collection();
-                if($usersWithinRange->count() == 1){ //Different query needed for amount of users within range. Gets the items posted by these users.
+                if ($usersWithinRange->count() == 1) { //Different query needed for amount of users within range. Gets the items posted by these users.
                     $advertisements = Advertisement::where('user_id', $userIDs)
-                                                ->orderBy('status', 'asc')
-                                                ->orderBy('premium', 'desc')
-                                                ->orderBy('created_at', 'desc')
-                                                ->get();
-                } else if($usersWithinRange->count() > 1){
+                        ->orderBy('status', 'asc')
+                        ->orderBy('premium', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+                } else if ($usersWithinRange->count() > 1) {
                     $advertisements = Advertisement::whereIn('user_id', $userIDs)
-                                                ->orderBy('status', 'asc')
-                                                ->orderBy('premium', 'desc')
-                                                ->orderBy('created_at', 'desc')
-                                                ->get();
+                        ->orderBy('status', 'asc')
+                        ->orderBy('premium', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
                 }
 
                 break;
@@ -253,26 +256,26 @@ class AdvertisementController extends Controller
                 $postalcodesWithinRange = $enteredPostalcode->getPostalcodesByDistance($distance); //Gets all postalcodes (id) within range.
                 $usersWithinRange = User::whereIn('postalcode_id', $postalcodesWithinRange)->get(); //Gets all users within this postalcode range.
                 $userIDs = new Collection();
-                foreach($usersWithinRange as $user){
+                foreach ($usersWithinRange as $user) {
                     $userIDs->push($user->id); //Creates new collection with only ID's of users within range for iteration.
                 }
                 $advertisements = new Collection();
-                if($usersWithinRange->count() == 1){ //Different query needed for amount of users within range. Gets the items posted by these users.
-                    $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
+                if ($usersWithinRange->count() == 1) { //Different query needed for amount of users within range. Gets the items posted by these users.
+                    $advertisements = Advertisement::whereHas('rubric', function ($query) use ($request) {
                         return $query->where('id', '=', $request->rubric);
-                                    })->where('user_id', $userIDs)
-                                    ->orderBy('status', 'asc')
-                                    ->orderBy('premium', 'desc')
-                                    ->orderBy('created_at', 'desc')
-                                    ->get();
-                } else if($usersWithinRange->count() > 1){
-                    $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
+                    })->where('user_id', $userIDs)
+                        ->orderBy('status', 'asc')
+                        ->orderBy('premium', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+                } else if ($usersWithinRange->count() > 1) {
+                    $advertisements = Advertisement::whereHas('rubric', function ($query) use ($request) {
                         return $query->where('id', '=', $request->rubric);
-                                    })->whereIn('user_id', $userIDs)
-                                    ->orderBy('status', 'asc')
-                                    ->orderBy('premium', 'desc')
-                                    ->orderBy('created_at', 'desc')
-                                    ->get();
+                    })->whereIn('user_id', $userIDs)
+                        ->orderBy('status', 'asc')
+                        ->orderBy('premium', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
                 }
 
                 break;
@@ -285,72 +288,72 @@ class AdvertisementController extends Controller
                 $postalcodesWithinRange = $enteredPostalcode->getPostalcodesByDistance($distance); //Gets all postalcodes (id) within range.
                 $usersWithinRange = User::whereIn('postalcode_id', $postalcodesWithinRange)->get(); //Gets all users within this postalcode range.
                 $userIDs = new Collection();
-                foreach($usersWithinRange as $user){
+                foreach ($usersWithinRange as $user) {
                     $userIDs->push($user->id); //Creates new collection with only ID's of users within range for iteration.
                 }
                 $advertisements = new Collection();
-                if($usersWithinRange->count() == 1){ //Different query needed for amount of users within range. Gets the items posted by these users.
+                if ($usersWithinRange->count() == 1) { //Different query needed for amount of users within range. Gets the items posted by these users.
                     $advertisements = Advertisement::where('user_id', $userIDs)
-                                                ->where('title', 'regexp', $search_regex)
-                                                ->orderBy('status', 'asc')
-                                                ->orderBy('premium', 'desc')
-                                                ->orderBy('created_at', 'desc')
-                                                ->get();
-                } else if($usersWithinRange->count() > 1){
+                        ->where('title', 'regexp', $search_regex)
+                        ->orderBy('status', 'asc')
+                        ->orderBy('premium', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+                } else if ($usersWithinRange->count() > 1) {
                     $advertisements = Advertisement::whereIn('user_id', $userIDs)
-                                                ->where('title', 'regexp', $search_regex)
-                                                ->orderBy('status', 'asc')
-                                                ->orderBy('premium', 'desc')
-                                                ->orderBy('created_at', 'desc')
-                                                ->get();
+                        ->where('title', 'regexp', $search_regex)
+                        ->orderBy('status', 'asc')
+                        ->orderBy('premium', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
                 }
-                
+
 
                 break;
             case ($request->distance == "all"): //search on rubric and regex search
                 $current_rubric_name = Rubric::where('id', '=', $request->rubric)->first()->name;
 
-                $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
+                $advertisements = Advertisement::whereHas('rubric', function ($query) use ($request) {
                     return $query->where('id', '=', $request->rubric);
-                                })->where('title', 'regexp', $search_regex)
-                                ->orderBy('status', 'asc')
-                                ->orderBy('premium', 'desc')
-                                ->orderBy('created_at', 'desc')
-                                ->get();
+                })->where('title', 'regexp', $search_regex)
+                    ->orderBy('status', 'asc')
+                    ->orderBy('premium', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
 
                 break;
             default: // search on rubric, distance and regex search
-            $current_rubric_name = Rubric::where('id', '=', $request->rubric)->first()->name;
+                $current_rubric_name = Rubric::where('id', '=', $request->rubric)->first()->name;
 
-            $distance = request('distance');
-            $current_user = User::where('id', '=', session()->get('current_user_id'))->first();
-            $enteredPostalcode = Postalcode::where('id', '=', $current_user->postalcode_id)->first();
-            $postalcodesWithinRange = $enteredPostalcode->getPostalcodesByDistance($distance); //Gets all postalcodes (id) within range.
-            $usersWithinRange = User::whereIn('postalcode_id', $postalcodesWithinRange)->get(); //Gets all users within this postalcode range.
-            $userIDs = new Collection();
-            foreach($usersWithinRange as $user){
-                $userIDs->push($user->id); //Creates new collection with only ID's of users within range for iteration.
-            }
-            $advertisements = new Collection();
-            if($usersWithinRange->count() == 1){ //Different query needed for amount of users within range. Gets the items posted by these users.
-                $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
-                    return $query->where('id', '=', $request->rubric);
-                                })->where('user_id', $userIDs)
-                                ->where('title', 'regexp', $search_regex)
-                                ->orderBy('status', 'asc')
-                                ->orderBy('premium', 'desc')
-                                ->orderBy('created_at', 'desc')
-                                ->get();
-            } else if($usersWithinRange->count() > 1){
-                $advertisements = Advertisement::whereHas('rubric', function ($query) use($request) {
-                    return $query->where('id', '=', $request->rubric);
-                                })->whereIn('user_id', $userIDs)
-                                ->where('title', 'regexp', $search_regex)
-                                ->orderBy('status', 'asc')
-                                ->orderBy('premium', 'desc')
-                                ->orderBy('created_at', 'desc')
-                                ->get();
-            }
+                $distance = request('distance');
+                $current_user = User::where('id', '=', session()->get('current_user_id'))->first();
+                $enteredPostalcode = Postalcode::where('id', '=', $current_user->postalcode_id)->first();
+                $postalcodesWithinRange = $enteredPostalcode->getPostalcodesByDistance($distance); //Gets all postalcodes (id) within range.
+                $usersWithinRange = User::whereIn('postalcode_id', $postalcodesWithinRange)->get(); //Gets all users within this postalcode range.
+                $userIDs = new Collection();
+                foreach ($usersWithinRange as $user) {
+                    $userIDs->push($user->id); //Creates new collection with only ID's of users within range for iteration.
+                }
+                $advertisements = new Collection();
+                if ($usersWithinRange->count() == 1) { //Different query needed for amount of users within range. Gets the items posted by these users.
+                    $advertisements = Advertisement::whereHas('rubric', function ($query) use ($request) {
+                        return $query->where('id', '=', $request->rubric);
+                    })->where('user_id', $userIDs)
+                        ->where('title', 'regexp', $search_regex)
+                        ->orderBy('status', 'asc')
+                        ->orderBy('premium', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+                } else if ($usersWithinRange->count() > 1) {
+                    $advertisements = Advertisement::whereHas('rubric', function ($query) use ($request) {
+                        return $query->where('id', '=', $request->rubric);
+                    })->whereIn('user_id', $userIDs)
+                        ->where('title', 'regexp', $search_regex)
+                        ->orderBy('status', 'asc')
+                        ->orderBy('premium', 'desc')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+                }
         }
 
         return view('advertisement/search', [
@@ -359,9 +362,5 @@ class AdvertisementController extends Controller
             'current_rubric_name' => $current_rubric_name,
             'request' => $request
         ]);
-
-
-
-        
     }
 }

@@ -16,6 +16,7 @@ class BiddingController extends Controller
      */
     public function index()
     {
+        // CR :: opruimen aub 
         dd(Bidding::all());
     }
 
@@ -38,16 +39,15 @@ class BiddingController extends Controller
     public function store(StoreBiddingRequest $request, advertisement $advertisement)
     {
         $validated = $request->validated();
-        
+
+        // CR :: NICE!
         Bidding::create([
             'user_id' => $request->session()->get('current_user_id'),
             'advertisement_id' => $advertisement->id,
             'bidding' => $validated['bidding'],
         ]);
 
-        return redirect()->route('advertisement.show', ['advertisement' => $advertisement->id] );
-
-        
+        return redirect()->route('advertisement.show', ['advertisement' => $advertisement->id]);
     }
 
     /**
@@ -94,6 +94,6 @@ class BiddingController extends Controller
     {
         Bidding::destroy($bidding->id);
 
-        return redirect()->route('advertisement.show', ['advertisement' => $advertisement->id] );
+        return redirect()->route('advertisement.show', ['advertisement' => $advertisement->id]);
     }
 }

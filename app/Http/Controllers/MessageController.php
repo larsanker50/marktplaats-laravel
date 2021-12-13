@@ -19,8 +19,8 @@ class MessageController extends Controller
     public function index(User $user, Request $request)
     {
         $messages = Message::where('from_user_id', '=', $request->session()->get('current_user_id'))->where('to_user_id', '=', $user->id)
-                        ->orwhere('from_user_id', '=', $user->id)->where('to_user_id', '=', $request->session()->get('current_user_id'))
-                        ->get();
+            ->orwhere('from_user_id', '=', $user->id)->where('to_user_id', '=', $request->session()->get('current_user_id'))
+            ->get();
 
         return view('message/index', [
             'user' => $user,
@@ -47,7 +47,7 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request, User $user)
     {
         $validated = $request->validated();
-        
+
         Message::create([
             'from_user_id' => $request->session()->get('current_user_id'),
             'to_user_id' => $user->id,
@@ -56,11 +56,12 @@ class MessageController extends Controller
 
         $from_user = user::where('id', '=', $request->session()->get('current_user_id'))->first();
         $to_user = $user;
+        // CR :: gevalideerde gegevens gebruiken
         $body = $request->body;
 
         Mail::to($user->email)->send(new SendMessageMail($from_user, $to_user, $body));
 
-        return redirect()->route('message.index', ['user' => $user->id] );
+        return redirect()->route('message.index', ['user' => $user->id]);
     }
 
     /**
